@@ -1,4 +1,34 @@
 "use strict";
+/* Notif */
+// Check if the browser supports the Notifications API
+if ('Notification' in window) {
+    // Check if the user has granted permission for notifications
+    if (Notification.permission === 'granted') {
+        // If permission is granted, create a notification
+        createNotification(" تم تفعيل الإشعار", "   سيتم إعلامك عندما يحين وقت الصلاة القادمة إذا تركت النافذة مفتوحة");
+    }
+    else if (Notification.permission !== 'denied') {
+        // If permission is not denied, request permission from the user
+        Notification.requestPermission().then(permission => {
+            if (permission === 'granted') {
+                createNotification(" تم تفعيل الإشعار", "   سيتم إعلامك عندما يحين وقت الصلاة القادمة إذا تركت النافذة مفتوحة");
+            }
+        });
+    }
+}
+// Function to create a notification
+function createNotification(msgTitle, msg) {
+    // You can customize the notification message and options
+    const notification = new Notification(msgTitle, {
+        body: msg,
+        icon: ''
+    });
+    // Optional: Handle events when the notification is clicked
+    notification.onclick = function () {
+        console.log('Notification clicked');
+        // Add any actions you want to perform when the notification is clicked
+    };
+}
 /* calling Functions */
 SetupUI();
 function getPrayerTimming(date, city) {
@@ -149,6 +179,7 @@ function startCountdown(minutes, prayername) {
         var currentTime = new Date();
         var timeDifference = endTime - currentTime;
         if (timeDifference <= 0) {
+            createNotification(" حان وقت الصلاة ", `  حان وقت صلاة ${prayername} `);
             document.getElementById('prayerNameDiv').innerHTML = `  
         <h2 class="text-8xl lg:text-6xl p-4 m-2 text-highpurple" dir="ltr" id="nextPrayerTime"> حان وقت صلاة </h2>
         <span class="text-8xl lg:text-6xl l p-4 m-2 bg-lightred text-white px-14 rounded-md" id="prayerName lg:p-16"> ${prayername}: </span>
