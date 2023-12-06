@@ -40,6 +40,6 @@ SalatTiming is a web application designed to provide prayer timing information f
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/your-username/SalatTiming.git
+   git clone https://github.com/moAminee/SalatTiming.git
 
 Dev link : https://www.linkedin.com/in/mohammed-amine-boukhalit-130357295/
