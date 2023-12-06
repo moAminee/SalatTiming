@@ -12,7 +12,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Reem+Kufi&display=swap" rel="stylesheet">
 <script src="./node_modules/axios/dist/axios.min.js"></script>
-<script src="./cities.js"></script>
+<script src="script.js"></script>
+
 <style>
     .cardframe {
       margin: 12px;
@@ -83,6 +84,7 @@
         
       </div>
     </div>
+    <script src="cities.js"></script>
 
   </body>
   <footer class="bg-black text-white p-4 " style="position: relative;
@@ -97,6 +99,34 @@
       <p>&copy; 2023 SalatTiming. All rights reserved </p> <a href="https://www.linkedin.com/in/mohammed-amine-boukhalit-130357295/">Contact the developer</a>
     </div>
   </footer>
-  <script src="script.js"></script>
+
+  <script>
+ function executeAfterPageLoad() {
+    // Your existing script
+    function populateDatalist() {
+      const citiesDatalist = document.getElementById('citiesList');
+      citiesDatalist.innerHTML = '';
+
+      citiesArray.forEach(city => {
+        const option = document.createElement('option');
+        option.value = city;
+        citiesDatalist.appendChild(option);
+      });
+    }
+
+    populateDatalist();
+
+    document.getElementById('cityInputText').addEventListener('change', function(event) {
+      var selectedCity = event.target.value;
+      console.log('Selected city:', selectedCity);
+      let dateNow = getUserDate();
+      getPrayerTimming(dateNow, selectedCity);
+    });
+  }
+
+  // Use window.onload to ensure the entire page has loaded
+  window.onload = executeAfterPageLoad;
+  // Alternatively, you can use DOMContentLoaded
+  </script>
 
 </html>
