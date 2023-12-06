@@ -60,13 +60,19 @@ function getPrayerTimming(date: string, city: string) {
       function checkNextPrayer() {
         for (let i = 0; i < prayerInMinites.length; i++) {
           if (timeNowInMinutes < prayerInMinites[i]) {
-            document.getElementById("nextPrayer").value = prayerInMinites[i];
 /*             document.getElementById("prayerName").innerHTML = prayerNames[i]
  */            console.log(prayerInMinites[i])
             let remainingTime = prayerInMinites[i] - timeNowInMinutes 
             startCountdown(remainingTime,prayerNames[i]);
             return prayerInMinites[i];
             
+          } else if (timeNowInMinutes > prayerInMinites[i]){
+            startCountdown( prayerInMinites[0],prayerNames[0]);
+
+            
+
+
+           
           }
         }
       }
