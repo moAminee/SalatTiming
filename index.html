@@ -11,11 +11,19 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Reem+Kufi&display=swap" rel="stylesheet">
+<script src="./node_modules/axios/dist/axios.min.js"></script>
 <style>
-    
-    .cardframe{
-        margin: 10px;
+    .cardframe {
+      margin: 12px;
+      padding: 3rem;
     }
+    @media (min-width: 640px) {
+  /* Add styles for screens with a minimum width of 640px (sm and above) */
+  .cardframe {
+    padding: 1rem;
+  }
+}
+
 </style>
   </head>
  
@@ -23,45 +31,49 @@
 
     <div class="flex flex-col items-center  w-full ">
         <!-- City -->
-      <div id="city" class=" flex w-full justify-center  mt-16">
-        <h1 class=" text-8xl lg:text-5xl bg-midpurple m-2 p-6 border-2 border-highpurple rounded-md pl-24"   >مراكش</h1>
+      <div  class=" flex w-full justify-center  mt-16">
+        <h1 class=" text-8xl lg:text-5xl bg-midpurple m-2 p-6 border-2 border-highpurple rounded-md pl-24"   id="city">مراكش</h1>
+        <input id="cityinput" type="hidden" value="">
       </div>
       <!-- Date -->
       <div class="lg:flex-row  flex flex-col bg-red-700 w-full justify-center items-center mb-16">
-        <h2 class="text-6xl lg:text-3xl  m-2 p-2 bg-midpurple border-2 border-highpurple rounded-md px-8"> الجمعة 4 دجنبر 2023 </h2>
-        <h2 class=" text-3xl lg:text-xl  m-2 p-1 h-10 bg-midpurple border-2 border-highpurple rounded-md px-8"> 20 جمادى الأولى 1445ه </h2>
+        <h2 class="text-6xl lg:text-3xl  m-2 p-2 bg-midpurple border-2 border-highpurple rounded-md px-8" id="arabicDate"> الجمعة 4 دجنبر 2023 </h2>
+        <h2 class=" text-3xl lg:text-xl  m-2 p-1 h-10 bg-midpurple border-2 border-highpurple rounded-md px-8" id="arabicDateHijri" > 20 جمادى الأولى 1445ه </h2>
       </div>
       <!-- Next Prayer -->
-      <div class="lg:flex-row flex flex-col items-center pt-3  bg-red-700 w-full justify-center mb-16">
-        <h2 class="text-8xl lg:text-6xl  p-4 m-2 bg-lightred text-white px-14 rounded-md "> الفجر </h2>
-        <h2 class="text-8xl lg:text-6xl p-4 m-2 text-highpurple  " dir="ltr"> - 06h00 </h2>
+      <div class="lg:flex-row flex flex-col items-center pt-3  bg-red-700 w-full justify-center mb-16" id="prayerNameDiv">
+        <h2 class="text-8xl lg:text-6xl p-4 m-2 text-highpurple  " dir="ltr" id="nextPrayerTime"> الوقت المتبقي لصلاة  </h2>
+        <span class="text-8xl lg:text-6xl  p-4  bg-lightred text-white px-14 rounded-md " id="prayerName" >   </span>
+        <input type="hidden" value="" id="nextPrayer">
+        <h2 class="text-8xl lg:text-6xl p-4 m-2 text-highpurple border-solid border-2 border-highpurple  " dir="ltr" id="nextPrayerTime"> - hh:mm </h2>
       </div>
       <!-- Cards -->
       <div class="lg:flex-row  items-center flex flex-col pt-3 justify-around bg-red-700   mb-80">
-        <div class=" cardframe  bg-midpurple   border-t-[26px] border-t-highpurple rounded-md "> 
-            <h3 class="carditems lg:pt-10 text-8xl lg:text-5xl lg:py-0 lg:pb-1 mb-1  py-12 px-4">الشروق</h3>
-            <h3 class="carditems  text-8xl lg:text-4xl text-highpurple py-12 px-6"> 06h00 </h3>
+
+        <div class=" cardframe  bg-midpurple  border-t-[26px] border-t-highpurple rounded-md "> 
+            <h3 class="carditems lg:pt-10 text-8xl lg:text-5xl lg:py-0 lg:pb-1 mb-1  py-12 px-4" id="sunrise">الفجر</h3>
+            <h3 class="carditems  text-8xl lg:text-4xl text-highpurple py-12 px-6"id="sunriseTime"> 06h00 </h3>
         </div>
         <div class=" cardframe bg-midpurple   border-t-[26px] border-t-highpurple rounded-md "> 
-            <h3 class="carditems lg:pt-10 text-8xl lg:text-5xl lg:py-0 lg:pb-1 mb-1  py-12 px-4">الشروق</h3>
-            <h3 class="carditems  text-8xl lg:text-4xl text-highpurple py-12 px-6"> 06h00 </h3>
+            <h3 class="carditems lg:pt-10 text-8xl lg:text-5xl lg:py-0 lg:pb-1 mb-1  py-12 px-4"id="dhuhr">الشروق</h3>
+            <h3 class="carditems  text-8xl lg:text-4xl text-highpurple py-12 px-6"id="fajrTime"> 06h00 </h3>
         </div>
         <div class=" cardframe bg-midpurple   border-t-[26px] border-t-highpurple rounded-md "> 
-            <h3 class="carditems lg:pt-10 text-8xl lg:text-5xl lg:py-0 lg:pb-1 mb-1  py-12 px-4">الشروق</h3>
-            <h3 class="carditems  text-8xl lg:text-4xl text-highpurple py-12 px-6"> 06h00 </h3>
+            <h3 class="carditems lg:pt-10 text-8xl lg:text-5xl lg:py-0 lg:pb-1 mb-1  py-12 px-4"id="asr">الظهر</h3>
+            <h3 class="carditems  text-8xl lg:text-4xl text-highpurple py-12 px-6"id="dhuhrTime"> 06h00 </h3>
         </div>
         <div class=" cardframe bg-midpurple   border-t-[26px] border-t-highpurple rounded-md "> 
-            <h3 class="ccarditems lg:pt-10 text-8xl lg:text-5xl lg:py-0 lg:pb-1 mb-1  py-12 px-4">الشروق</h3>
-            <h3 class="carditems  text-8xl lg:text-4xl text-highpurple py-12 px-6"> 06h00 </h3>
+            <h3 class="ccarditems lg:pt-10 text-8xl lg:text-5xl lg:py-0 lg:pb-1 mb-1  py-12 px-4"id="sunset">العصر</h3>
+            <h3 class="carditems  text-8xl lg:text-4xl text-highpurple py-12 px-6"id="asrTime"> 06h00 </h3>
         </div>
 
         <div class=" cardframe bg-midpurple   border-t-[26px] border-t-highpurple rounded-md "> 
-            <h3 class="carditems lg:pt-10 text-8xl lg:text-5xl lg:py-0 lg:pb-1 mb-1  py-12 px-4">الشروق</h3>
-            <h3 class="carditems  text-8xl lg:text-4xl text-highpurple py-12 px-6"> 06h00 </h3>
+            <h3 class="carditems lg:pt-10 text-8xl lg:text-5xl lg:py-0 lg:pb-1 mb-1  py-12 px-4"id="maghrib">المغرب</h3>
+            <h3 class="carditems  text-8xl lg:text-4xl text-highpurple py-12 px-6"id="maghribTime"> 06h00 </h3>
         </div>
         <div class=" cardframe bg-midpurple   border-t-[26px] border-t-highpurple rounded-md "> 
-            <h3 class="carditems lg:pt-10 text-8xl lg:text-5xl lg:py-0 lg:pb-1 mb-1  py-12 px-4">الشروق</h3>
-            <h3 class="carditems  text-8xl lg:text-4xl text-highpurple py-12 px-6"> 06h00 </h3>
+            <h3 class="carditems lg:pt-10 text-8xl lg:text-5xl lg:py-0 lg:pb-1 mb-1  py-12 px-4"id="isha">العشاء</h3>
+            <h3 class="carditems  text-8xl lg:text-4xl text-highpurple py-12 px-6"id="ishaTime"> 06h00 </h3>
         </div>
 
         
