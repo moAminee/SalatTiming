@@ -2,7 +2,8 @@
 SetupUI();
 
 function getPrayerTimming(date: string, city: string) {
-  let apiurl = `https://api.aladhan.com/v1/timingsByAddress/${date}?address=${city}&method=8`;
+  /* Using Morocco methode */
+  let apiurl = `https://api.aladhan.com/v1/timingsByAddress/${date}?address=${city}&method=21`;
 
   axios
     .get(apiurl)
@@ -87,7 +88,7 @@ function SetupUI() {
     .then((response) => {
       let userCity = response.data.city;
       console.log(userCity);
-      document.getElementById("cityinput").value = userCity;
+      document.getElementById("cityInputText").value = userCity;
       let dateNow = getUserDate();
       getPrayerTimming(dateNow, userCity);
       /* Start DOM */
@@ -155,7 +156,14 @@ function convertMinutesToTime(totalMinutes) {
 }
 
 
+let countdownTimer; // Variable to store the timer ID
+
 function startCountdown(minutes, prayername) {
+  // Clear the existing timeout if it's set
+  if (countdownTimer) {
+    clearTimeout(countdownTimer);
+  }
+
   var endTime = new Date();
   endTime.setMinutes(endTime.getMinutes() + minutes);
 
@@ -164,7 +172,7 @@ function startCountdown(minutes, prayername) {
     var timeDifference = endTime - currentTime;
 
     if (timeDifference <= 0) {
-      document.getElementById('nextPrayerTime').innerHTML = `  
+      document.getElementById('prayerNameDiv').innerHTML = `  
         <h2 class="text-8xl lg:text-6xl p-4 m-2 text-highpurple" dir="ltr" id="nextPrayerTime"> حان وقت صلاة </h2>
         <span class="text-8xl lg:text-6xl l p-4 m-2 bg-lightred text-white px-14 rounded-md" id="prayerName lg:p-16"> ${prayername}: </span>
         <input type="hidden" value="" id="nextPrayer">
@@ -184,7 +192,7 @@ function startCountdown(minutes, prayername) {
         <h2 class="text-8xl lg:text-6xl p-4 m-2 text-black bg-white rounded-md" dir="ltr" id="nextPrayerTime"> ${formattedTime} </h2>
       `;
 
-      setTimeout(updateCountdown, 1000); // Update every second
+      countdownTimer = setTimeout(updateCountdown, 1000); // Update every second and store the timer ID
     }
   }
 
@@ -197,4 +205,41 @@ function padZero(number) {
 
 
 
+
+
+
+
+      // Function to populate the datalist with cities
+  function populateDatalist() {
+    const citiesDatalist = document.getElementById('citiesList');
+
+    // Clear existing options
+    citiesDatalist.innerHTML = '';
+
+    // Add cities to the datalist
+    citiesArray.forEach(city => {
+      const option = document.createElement('option');
+      option.value = city;
+      citiesDatalist.appendChild(option);
+    });
+  }
+
+  // Call the function to populate the datalist
+  populateDatalist();
+
+  document.getElementById('cityInputText').addEventListener('change', function(event) {
+    // Access the selected value and do something with it
+    var selectedCity = event.target.value;
+    console.log('Selected city:', selectedCity);
+    let dateNow = getUserDate();
+      getPrayerTimming(dateNow, selectedCity);
+
+    // If you want to save the value somewhere, you can use it as needed
+    // For example, you can save it to a variable or send it to the server.
+  });
+
+
+
+
+/* city array  */
 

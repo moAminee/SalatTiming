@@ -12,6 +12,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Reem+Kufi&display=swap" rel="stylesheet">
 <script src="./node_modules/axios/dist/axios.min.js"></script>
+<script src="./cities.js"></script>
 <style>
     .cardframe {
       margin: 12px;
@@ -32,8 +33,11 @@
     <div class="flex flex-col items-center  w-full ">
         <!-- City -->
       <div  class=" flex w-full justify-center  mt-16">
-        <h1 class=" text-8xl lg:text-5xl bg-midpurple m-2 p-6 border-2 border-highpurple rounded-md pl-24"   id="city">مراكش</h1>
+        <input  class=" text-5xl lg:text-3xl bg-midpurple m-2 p-6 border-2 border-highpurple rounded-md "   style="text-align: center;" id="cityInputText"type="text" value="" list="citiesList">
         <input id="cityinput" type="hidden" value="">
+        <datalist id="citiesList">
+          <!-- Cities will be dynamically added here -->
+        </datalist>
       </div>
       <!-- Date -->
       <div class="lg:flex-row  flex flex-col bg-red-700 w-full justify-center items-center mb-16">
