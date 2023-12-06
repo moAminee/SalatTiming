@@ -15,6 +15,7 @@ module.exports = {
       'white':'#FFFFFF',
       'lightred' : '#8E008C',
       'nightred' : '#7744AA',
+      'newback'  :'#2D1645',
 
 
 
